@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title }}</title>
+  <meta name="description" content="{{ description }}">
+  <meta name="keywords" content="{{ keywords }}">
+  <meta property="og:title" content="{{ title }}">
+  <meta property="og:description" content="{{ description }}">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="/static/favicon.png">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <header>
+    <a href="/index.html" class="nav-link">← ブログ一覧に戻る</a>
+  </header>
+
+  <main>
+    <article class="article-content">
+      <div class="article-header">
+        <h1 class="article-title">{{ article.title }}</h1>
+        <div class="article-meta">
+          <span>{{ article.date }}</span>
+          <div class="tags" style="display: inline-flex; margin-left: 1rem;">
+            {% for t in article.tags %}
+            <a href="/tag/{{ t }}.html" class="tag">#{{ t }}</a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      
+      <div class="markdown-body">
+        {{ article.html | safe }}
+      </div>
+    </article>
+  </main>
+
+  <footer>© 2025</footer>
+</body>
+</html>

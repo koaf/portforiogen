@@ -1,0 +1,25 @@
+[
+  {
+    "slug": "first-post",
+    "title": "初めての記事",
+    "summary": "これは最初のブログ記事です。",
+    "date": "2025-11-16",
+    "tags": [
+      "Python",
+      "Tips"
+    ],
+    "cover": "https://placehold.co/800x400",
+    "markdown": "data/blog/markdown/first-post.md"
+  },
+  {
+    "slug": "second-post",
+    "title": "二つ目の記事",
+    "summary": "ブログ記事サンプル2",
+    "date": "2025-11-17",
+    "tags": [
+      "Tutorial"
+    ],
+    "cover": "https://placehold.co/800x400",
+    "markdown": "data/blog/markdown/second-post.md"
+  }
+]

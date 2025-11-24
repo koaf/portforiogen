@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title }}</title>
+  <meta name="description" content="{{ description }}">
+  <meta name="keywords" content="{{ keywords }}">
+  <meta property="og:title" content="{{ title }}">
+  <meta property="og:description" content="{{ description }}">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="/static/favicon.png">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <header>
+    <h1>#{{ tag }}</h1>
+    <p>タグが付いた記事一覧</p>
+    <a href="/index.html" class="nav-link">← トップに戻る</a>
+  </header>
+
+  <main class="grid">
+    {% for a in articles %}
+    <a href="{% if a.html_path %}/blog/{{ a.slug }}.html{% else %}{{ a.url }}{% endif %}" class="card" {% if not a.html_path %}target="_blank"{% endif %}>
+      {% if a.cover %}
+      <img src="{{ a.cover }}" class="card-image" alt="{{ a.title }}" />
+      {% else %}
+      <div class="card-image no-image">サンプル</div>
+      {% endif %}
+      <div class="card-content">
+        <h2 class="card-title">{{ a.title }}</h2>
+        <p class="card-summary">{{ a.summary }}</p>
+        <div class="tags">
+          {% for t in a.tags %}
+          <span class="tag">#{{ t }}</span>
+          {% endfor %}
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+  </main>
+
+  <footer>© 2025</footer>
+</body>
+</html>

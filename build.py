@@ -112,7 +112,7 @@ def main():
     if updated:
         with open(ARTICLES_FILE, "w", encoding="utf-8") as f:
             json.dump(portfolio_data, f, indent=2, ensure_ascii=False)
-        print("✨ Updated OGP images in articles.json")
+        print("[INFO] Updated OGP images in articles.json")
 
     # ブログ記事読み込み
     blog_posts = load_markdown_files()
@@ -193,9 +193,9 @@ def main():
         if os.path.exists(STATIC_DIST):
             shutil.rmtree(STATIC_DIST)
         shutil.copytree(STATIC_DIR, STATIC_DIST)
-        print("📦 Static files copied")
+        print("[INFO] Static files copied")
 
-    print("🎉 ビルド完了!")
+    print("[SUCCESS] ビルド完了!")
 
 
 if __name__ == "__main__":

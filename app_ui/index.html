@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PoHo</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script type="text/javascript" src="/eel.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <nav class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-layer-group"></i> PoHo
+            </div>
+            <ul class="nav-links">
+                <li class="active" data-tab="dashboard">
+                    <i class="fa-solid fa-gauge"></i> Dashboard
+                </li>
+                <li data-tab="blog">
+                    <i class="fa-solid fa-pen-nib"></i> New Blog Post
+                </li>
+                <li data-tab="portfolio">
+                    <i class="fa-solid fa-briefcase"></i> Add Portfolio
+                </li>
+                <li data-tab="create-project">
+                    <i class="fa-solid fa-folder-plus"></i> Create Project
+                </li>
+            </ul>
+        </nav>
+
+        <main class="content">
+            <!-- Dashboard Tab -->
+            <div id="dashboard" class="tab-content active">
+                <h1>Dashboard</h1>
+                <div class="actions-grid">
+                    <div class="action-card" onclick="runBuild()">
+                        <div class="icon"><i class="fa-solid fa-rotate"></i></div>
+                        <h3>Build Site</h3>
+                        <p>サイトを生成・更新します</p>
+                    </div>
+                    <div class="action-card" onclick="startServer()">
+                        <div class="icon"><i class="fa-solid fa-globe"></i></div>
+                        <h3>Preview</h3>
+                        <p>ブラウザでプレビューを表示</p>
+                    </div>
+                    <div class="action-card" onclick="openDir()">
+                        <div class="icon"><i class="fa-solid fa-folder-open"></i></div>
+                        <h3>Open Folder</h3>
+                        <p>プロジェクトフォルダを開く</p>
+                    </div>
+                </div>
+
+                <div class="log-container">
+                    <h3><i class="fa-solid fa-terminal"></i> Logs</h3>
+                    <div id="log-area" class="log-area"></div>
+                </div>
+            </div>
+
+            <!-- Blog Tab -->
+            <div id="blog" class="tab-content">
+                <h1>New Blog Post</h1>
+                <form id="blog-form">
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" id="blog-title" placeholder="記事のタイトル">
+                    </div>
+                    <div class="form-group">
+                        <label>Slug (URL)</label>
+                        <input type="text" id="blog-slug" placeholder="first-post">
+                    </div>
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="blog-date">
+                    </div>
+                    <div class="form-group">
+                        <label>Tags (comma separated)</label>
+                        <input type="text" id="blog-tags" placeholder="Python, Tips">
+                    </div>
+                    <div class="form-group">
+                        <label>Summary</label>
+                        <textarea id="blog-summary" rows="3" placeholder="記事の概要..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Content (Markdown)</label>
+                        <textarea id="blog-content" rows="15" placeholder="# Hello World..."></textarea>
+                    </div>
+                    <button type="button" class="btn-primary" onclick="saveBlogPost()">
+                        <i class="fa-solid fa-floppy-disk"></i> Save Post
+                    </button>
+                </form>
+
+                <hr class="divider">
+                
+                <div class="list-header">
+                    <h2>Manage Posts</h2>
+                    <button class="btn-secondary" onclick="loadBlogPosts()">
+                        <i class="fa-solid fa-rotate-right"></i> Refresh
+                    </button>
+                </div>
+                <div id="blog-list" class="item-list">
+                    <!-- Blog posts will be populated here -->
+                </div>
+            </div>
+
+            <!-- Portfolio Tab -->
+            <div id="portfolio" class="tab-content">
+                <h1>Add Portfolio</h1>
+                <form id="portfolio-form">
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" id="pf-title" placeholder="プロジェクト名">
+                    </div>
+                    <div class="form-group">
+                        <label>URL</label>
+                        <input type="url" id="pf-url" placeholder="https://example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="pf-date">
+                    </div>
+                    <div class="form-group">
+                        <label>Tags (comma separated)</label>
+                        <input type="text" id="pf-tags" placeholder="Web, Design">
+                    </div>
+                    <div class="form-group">
+                        <label>Cover Image URL</label>
+                        <input type="url" id="pf-cover" placeholder="https://example.com/image.png">
+                    </div>
+                    <div class="form-group">
+                        <label>Summary</label>
+                        <textarea id="pf-summary" rows="3" placeholder="プロジェクトの概要..."></textarea>
+                    </div>
+                    <button type="button" class="btn-primary" onclick="savePortfolio()">
+                        <i class="fa-solid fa-plus"></i> Add to Portfolio
+                    </button>
+                </form>
+
+                <hr class="divider">
+
+                <div class="list-header">
+                    <h2>Manage Portfolio</h2>
+                    <button class="btn-secondary" onclick="loadPortfolioItems()">
+                        <i class="fa-solid fa-rotate-right"></i> Refresh
+                    </button>
+                </div>
+                <div id="portfolio-list" class="item-list">
+                    <!-- Portfolio items will be populated here -->
+                </div>
+            </div>
+
+            <!-- Create Project Tab -->
+            <div id="create-project" class="tab-content">
+                <h1>Create New Project</h1>
+                <p style="margin-bottom: 20px; color: #6b7280;">新しいポートフォリオサイトの雛形を作成します。</p>
+                <form id="project-form">
+                    <div class="form-group">
+                        <label>Project Name (Folder Name)</label>
+                        <input type="text" id="proj-name" placeholder="my-portfolio">
+                    </div>
+                    <div class="form-group">
+                        <label>Parent Directory Path</label>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="proj-path" placeholder="C:/Users/username/Documents">
+                            <button type="button" class="btn-primary" onclick="selectFolder()" style="width: auto; white-space: nowrap;">
+                                <i class="fa-solid fa-folder"></i> Select
+                            </button>
+                        </div>
+                        <small style="color: #6b7280;">指定したフォルダの中にプロジェクト名のフォルダが作成されます。</small>
+                    </div>
+                    <button type="button" class="btn-primary" onclick="createProject()">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Create Project
+                    </button>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>

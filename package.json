@@ -1,0 +1,39 @@
+{
+  "name": "poho",
+  "productName": "PoHo",
+  "version": "1.0.0",
+  "author": "koaf",
+  "description": "静的サイトジェネレータ―",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "com.koaf.poho",
+    "icon": "icon.png",
+    "win": {
+      "target": "nsis",
+      "icon": "icon.png"
+    },
+    "files": [
+      "**/*",
+      "build.py",
+      "templates/**/*",
+      "static/**/*",
+      "app_ui/**/*"
+    ],
+    "extraResources": [
+      "build.py",
+      "templates",
+      "static"
+    ]
+  },
+  "dependencies": {
+    "serve-handler": "^6.1.5"
+  },
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1"
+  }
+}

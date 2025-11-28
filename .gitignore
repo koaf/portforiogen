@@ -1,2 +1,7 @@
 /dist
 articles_save.json
+/build
+/node_modules
+.DS_Store
+/data
+

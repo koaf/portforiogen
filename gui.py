@@ -347,7 +347,8 @@ def delete_portfolio_item_py(url):
 if __name__ == "__main__":
     # アプリ起動
     try:
-        eel.start('index.html', size=(1000, 700))
+        # port=0 を指定して空いているポートを自動的に使用する
+        eel.start('index.html', size=(1000, 700), port=0)
     except (SystemExit, MemoryError, KeyboardInterrupt):
         # ウィンドウが閉じられたときの処理
         pass

@@ -21,5 +21,15 @@
     ],
     "cover": "https://placehold.co/800x400",
     "markdown": "data/blog/markdown/second-post.md"
+  },
+  {
+    "slug": "Third-post",
+    "title": "3つめの記事",
+    "summary": "三つ目の記事",
+    "date": "2025-11-26",
+    "tags": [
+      "Tips"
+    ],
+    "markdown": "data/blog/markdown/Third-post.md"
   }
 ]

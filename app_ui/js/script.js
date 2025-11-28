@@ -20,7 +20,6 @@ document.querySelectorAll('.nav-links li').forEach(item => {
 });
 
 // Logger
-eel.expose(logMessage);
 function logMessage(message) {
     const logArea = document.getElementById('log-area');
     const timestamp = new Date().toLocaleTimeString();
@@ -28,18 +27,22 @@ function logMessage(message) {
     logArea.scrollTop = logArea.scrollHeight;
 }
 
+if (window.api) {
+    window.api.logMessage(logMessage);
+}
+
 // Dashboard Actions
 async function runBuild() {
     logMessage("--- ビルド開始 ---");
-    await eel.run_build_py()();
+    await window.api.runBuild();
 }
 
 async function startServer() {
-    await eel.start_preview_server()();
+    await window.api.startServer();
 }
 
 async function openDir() {
-    await eel.open_project_dir()();
+    await window.api.openProjectDir();
 }
 
 // Blog Actions
@@ -56,7 +59,7 @@ async function saveBlogPost() {
         return;
     }
 
-    const result = await eel.save_blog_post_py(title, slug, date, tags, summary, content)();
+    const result = await window.api.saveBlogPost({ title, slug, date, tags, summary, content });
     if (result.success) {
         logMessage(`ブログ記事を保存しました: ${title}`);
         alert("保存しました！");
@@ -76,7 +79,7 @@ async function loadBlogPosts() {
     const listContainer = document.getElementById('blog-list');
     listContainer.innerHTML = '<p>Loading...</p>';
     
-    const posts = await eel.get_blog_posts_py()();
+    const posts = await window.api.getBlogPosts();
     listContainer.innerHTML = '';
 
     if (posts.length === 0) {
@@ -106,7 +109,7 @@ async function loadBlogPosts() {
 async function deleteBlogPost(slug) {
     if(!confirm(`記事 "${slug}" を削除してもよろしいですか？`)) return;
 
-    const result = await eel.delete_blog_post_py(slug)();
+    const result = await window.api.deleteBlogPost(slug);
     if (result.success) {
         logMessage(`ブログ記事を削除しました: ${slug}`);
         loadBlogPosts();
@@ -129,7 +132,7 @@ async function savePortfolio() {
         return;
     }
 
-    const result = await eel.save_portfolio_py(title, url, date, tags, cover, summary)();
+    const result = await window.api.savePortfolio({ title, url, date, tags, cover, summary });
     if (result.success) {
         logMessage(`ポートフォリオを追加しました: ${title}`);
         alert("追加しました！");
@@ -146,7 +149,7 @@ async function loadPortfolioItems() {
     const listContainer = document.getElementById('portfolio-list');
     listContainer.innerHTML = '<p>Loading...</p>';
     
-    const items = await eel.get_portfolio_items_py()();
+    const items = await window.api.getPortfolioItems();
     listContainer.innerHTML = '';
 
     if (items.length === 0) {
@@ -176,7 +179,7 @@ async function loadPortfolioItems() {
 async function deletePortfolioItem(url) {
     if(!confirm(`ポートフォリオ項目 "${url}" を削除してもよろしいですか？`)) return;
 
-    const result = await eel.delete_portfolio_item_py(url)();
+    const result = await window.api.deletePortfolioItem(url);
     if (result.success) {
         logMessage(`ポートフォリオ項目を削除しました: ${url}`);
         loadPortfolioItems();
@@ -187,7 +190,7 @@ async function deletePortfolioItem(url) {
 
 // Create Project Actions
 async function selectFolder() {
-    const path = await eel.select_folder_dialog()();
+    const path = await window.api.selectFolder();
     if (path) {
         document.getElementById('proj-path').value = path;
     }
@@ -203,12 +206,12 @@ async function createProject() {
     }
 
     logMessage(`プロジェクト作成中: ${path}/${name}...`);
-    const result = await eel.create_new_project_py(name, path)();
+    const result = await window.api.createProject(name, path);
     
     if (result.success) {
         logMessage(`プロジェクトを作成しました: ${result.path}`);
         if(confirm(`プロジェクトが作成されました！\n場所: ${result.path}\n\n新しいウィンドウで開きますか？`)) {
-            await eel.open_folder_py(result.path)();
+            await window.api.openFolder(result.path);
         }
     } else {
         logMessage(`作成エラー: ${result.message}`);
